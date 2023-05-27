@@ -20,6 +20,6 @@ public class NumberStringToEnglish {
 
         answer = Integer.parseInt(s);
 
-        return answer;
+        System.out.println(answer);
     }
 }
