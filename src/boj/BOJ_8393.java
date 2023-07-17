@@ -2,20 +2,20 @@ package boj;
 
 import java.util.Scanner;
 
-public class BOJ_2438 {
+public class BOJ_8393 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		
-		int A = sc.nextInt();
+		int n = sc.nextInt();
 		
-		for (int i = 0; i < A; i++) {
-			for (int j = 0; j < i+1; j++) {
-				System.out.print('*');
-			}
-			System.out.println();
+		int sum = 0;
+		for (int i = 1; i <= n; i++) {
+			sum += i;
 		}
+		
+		System.out.println(sum);
 	}
 
 }

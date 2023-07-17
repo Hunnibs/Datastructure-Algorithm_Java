@@ -1,4 +1,4 @@
-package day3;
+package boj;
 
 import java.util.Scanner;
 
