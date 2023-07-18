@@ -21,9 +21,7 @@ public class BOJ_2443 {
 			for (int j = 1; j < A; j++) {
 				if (j < i) {
 					System.out.print('*');
-				} else {
-					System.out.print(' ');
-				}
+				} 
 			}
 			System.out.println();
 		}
