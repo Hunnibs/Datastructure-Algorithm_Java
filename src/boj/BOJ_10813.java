@@ -1,9 +1,8 @@
 package boj;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
-public class BOJ_10810 {
+public class BOJ_10813 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -12,17 +11,22 @@ public class BOJ_10810 {
 		int N = sc.nextInt();
 		int M = sc.nextInt();
 		int[] basket = new int[N];
-		for (int num = 0; num < M; num++) {
-			int i, j, k;
-			i = sc.nextInt();
-			j = sc.nextInt();
-			k = sc.nextInt();
-			for (int x = i-1; x < j; x++) {
-				basket[x] = k;
-			}
+		for (int x = 0; x < N; x++) {
+			basket[x] = x+1;
 		}
+		
+		for (int i = 0; i < M; i++) {
+			int a = sc.nextInt()-1;
+			int b = sc.nextInt()-1;
+			
+			int tmp = basket[a];
+			basket[a] = basket[b];
+			basket[b] = tmp;
+		}
+		
 		for (int i = 0; i < N; i++) {
 			System.out.print(basket[i] + " ");
 		}
 	}
+
 }
