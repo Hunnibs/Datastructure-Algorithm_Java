@@ -1,4 +1,4 @@
-package day3;
+package boj;
 
 public class BOJ_25083 {
 	public static void main(String[] args) {
