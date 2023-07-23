@@ -1,28 +1,24 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Main {
-    int iv;
-    static int cv;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
 
-    static{
-        System.out.println("Static");
-
-    }
-    {
-        System.out.println("instance");
-        iv = 100;
-    }
-
-    public Main(){
-        System.out.printf("%d, ,%d\n", iv, cv);
-        this.iv = 300;
+        for(int i = 0; i<N; i++){
+            st = new StringTokenizer(br.readLine());
+            if(st.nextToken().equals("pop")) {
+                System.out.println(1);
+            } else{
+                System.out.println(2);
+            }
+        }
     }
 
-    public static void main(String[] args) {
-        Main x = new Main();
-        System.out.printf("%d, ,%d\n", x.iv, cv);
-        Main y = new Main();
-        System.out.printf("%d, ,%d\n", y.iv, cv);
-    }
 }
