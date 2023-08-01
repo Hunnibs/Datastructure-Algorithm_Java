@@ -1,4 +1,4 @@
-package boj;
+package boj.sprouts;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

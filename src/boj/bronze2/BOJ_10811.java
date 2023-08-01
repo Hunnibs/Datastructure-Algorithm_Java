@@ -1,4 +1,4 @@
-package boj;
+package boj.bronze2;
 
 import java.io.BufferedReader;
 import java.io.IOException;

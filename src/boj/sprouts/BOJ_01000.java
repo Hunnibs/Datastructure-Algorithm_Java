@@ -1,7 +1,7 @@
 /**
  * 
  */
-package boj;
+package boj.sprouts;
 
 import java.util.Scanner;
 

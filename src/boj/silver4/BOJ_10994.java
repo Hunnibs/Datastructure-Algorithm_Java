@@ -1,4 +1,4 @@
-package boj;
+package boj.silver4;
 
 import java.util.Arrays;
 import java.util.Scanner;

@@ -1,11 +1,11 @@
-package SWEA;
+package swea;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class AddOddNumber {
+public class FindMaxValue {
     static int T;
     static int[] array = new int[10];
 
@@ -18,19 +18,17 @@ public class AddOddNumber {
         for (int i = 0; i < T; i++) {
             st = new StringTokenizer(br.readLine());
 
-            int sum = 0;
+            int max = 0;
 
             for (int j = 0; j < 10; j++) {
                 array[j] = Integer.parseInt(st.nextToken());
             }
 
             for (int j = 0; j < 10; j++) {
-                if (array[j] % 2 == 1){
-                    sum += array[j];
-                }
+                max = Math.max(max, array[j]);
             }
 
-            System.out.println("#" + Integer.toString(i+1) + " " + Integer.toString(sum));
+            System.out.println("#" + Integer.toString(i+1) + " " + Integer.toString(max));
         }
     }
 }

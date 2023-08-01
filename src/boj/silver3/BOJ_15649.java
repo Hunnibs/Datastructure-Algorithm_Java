@@ -1,4 +1,4 @@
-package boj.s3;
+package boj.silver3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
