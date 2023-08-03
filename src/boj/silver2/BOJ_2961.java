@@ -52,7 +52,7 @@ public class BOJ_2961 {
 	
 	private static void subset(int idx, int cnt) {
 		if (idx == N) {
-			if (cnt > 0 ) {
+			if (cnt > 0) {
 				S = 1;
 				B = 0;
 				for (int i = 0; i < N; i++) {
