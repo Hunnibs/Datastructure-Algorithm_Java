@@ -1,4 +1,4 @@
-package boj;
+package boj.silver2;
 
 /**
 
