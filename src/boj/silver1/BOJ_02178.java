@@ -23,6 +23,15 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.StringTokenizer;
 
+class Info{
+	int r;
+	int c;
+	public Info(int r, int c) {
+		this.r = r;
+		this.c = c;
+	}
+}
+
 public class BOJ_02178 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -33,8 +42,7 @@ public class BOJ_02178 {
     static int[][] answer;
     static char[][] maze;
     static boolean[][] visited;
-    static ArrayList<Integer> tmp;
-    static Deque<ArrayList<Integer>> dq = new ArrayDeque<>();
+    static Deque<Info> dq = new ArrayDeque<>();
 
     public static void main(String[] args) throws IOException {
         // input
@@ -51,13 +59,10 @@ public class BOJ_02178 {
             maze[r] = S.toCharArray();
         }
 
-        //
+        // main
         answer[0][0] = 1;
         visited[0][0] = true;
-        tmp = new ArrayList<>();
-        tmp.add(0);
-        tmp.add(0);
-        dq.offer(tmp);
+        dq.offer(new Info(0, 0));
         bfs();
 
         System.out.println(answer[N-1][M-1]);
@@ -65,18 +70,15 @@ public class BOJ_02178 {
 
     private static void bfs(){
         while(!dq.isEmpty()) {
-            row = dq.peekFirst().get(0);
-            col = dq.pollFirst().get(1);
+            row = dq.peekFirst().r;
+            col = dq.pollFirst().c;
             for (int i = 0; i < 4; i++) {
                 tr = row + delta[i][0];
                 tc = col + delta[i][1];
                 if (isIn() && !visited[tr][tc] && maze[tr][tc] == '1') {
                     visited[tr][tc] = true;
                     answer[tr][tc] = answer[row][col]+1;
-                    tmp = new ArrayList<>();
-                    tmp.add(tr);
-                    tmp.add(tc);
-                    dq.add(tmp);
+                    dq.add(new Info(tr, tc));
                 }
             }
         }
