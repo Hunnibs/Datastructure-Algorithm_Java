@@ -27,16 +27,18 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.StringTokenizer;
 
-class Info{
-	int index, value;
 
-	public Info(int index, int value) {
-		this.index = index;
-		this.value = value;
-	}
-}
 
 public class BOJ_02493 {
+	static class Info{
+		int index, value;
+
+		public Info(int index, int value) {
+			this.index = index;
+			this.value = value;
+		}
+	}
+	
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
