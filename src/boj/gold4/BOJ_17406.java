@@ -1,4 +1,4 @@
-package boj;
+package boj.gold4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.util.*;
  N x N 배열이라고 가정했을 때
  배열을 새로 돌릴 때마다 복사본을 만들어야하므로 N만큼 시간이 들며, rotate 메소드는 최악의 경우 N^2, search method는 N^2만큼 탐색을 진행한다.
  총 2 x (N ^ 2) x N x (2 ^ K)만큼의 연산을 진행해줘야하며 복사 배열을 생성하므로 Memory 낭비도 심하다.
- 하지만 50 x 50 배열이 최대 사이즈에 6!만큼을 연산하므로 시간 안에 계산이 가능하다. 
+ 하지만 50 x 50 배열이 최대 사이즈에 6!만큼을 연산하므로 시간 안에 계산이 가능하다.
  */
 
 public class BOJ_17406 {
