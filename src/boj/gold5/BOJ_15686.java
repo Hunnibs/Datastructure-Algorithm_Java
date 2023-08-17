@@ -1,24 +1,46 @@
 package boj.gold5;
 
+/**
+
+@author 이병헌
+@since 2023. 8. 11.
+@see https://www.acmicpc.net/problem/15686
+@git
+@youtube
+@performance 
+@category #
+@note 
+치킨 집 중에서 M개만 남기고 폐업시켜야하므로 남길 수 있는 치킨 집 좌표의 조합을 구해준다. 이 후 조합마다 
+*/
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class BOJ_15686 {
+	static class Info{
+		int row, col;
+
+		public Info(int row, int col) {
+			super();
+			this.row = row;
+			this.col = col;
+		}
+	}
+	
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	
 	static int N, M, loc, sum, min, answer;
 	static Boolean[] visited;
-	static ArrayList<ArrayList<Integer>> house = new ArrayList<>();
-	static ArrayList<ArrayList<Integer>> chickenHouse = new ArrayList<>();
-	static ArrayList<ArrayList<ArrayList<Integer>>> remainChickenHouse = new ArrayList<>();
-	static ArrayList<Integer> sums = new ArrayList<>();
-	static ArrayList<Integer> tmp;
-	static ArrayList<ArrayList<Integer>> tmp3 = new ArrayList<>();
+	static ArrayList<Info> house = new ArrayList<Info>();
+	static ArrayList<Info> chickenHouse = new ArrayList<Info>();
+	static ArrayList<Info> comb = new ArrayList<Info>();
+	static ArrayList<ArrayList<Info>> remainChickenHouse = new ArrayList<ArrayList<Info>>();
 	
 	public static void main(String[] args) throws IOException{
 		// input
@@ -29,66 +51,52 @@ public class BOJ_15686 {
 		for (int r = 1; r <= N; r++) {
 			st = new StringTokenizer(br.readLine());
 			for (int c = 1; c <= N; c++) {
-				tmp = new ArrayList<>();
 				loc = Integer.parseInt(st.nextToken());
-				tmp.add(r);
-				tmp.add(c);
 				if (loc == 1) {
-					house.add(tmp);
+					house.add(new Info(r, c));
 				} else if (loc == 2) {
-					chickenHouse.add(tmp);
+					chickenHouse.add(new Info(r, c));
 				} 
 			}
 		}
 
 		// main
 		// Combination을 이용해서 남은 치킨집 배열 생성
-		ArrayList<ArrayList<Integer>> tmp2 = new ArrayList<>();
-		visited = new Boolean[chickenHouse.size()];
-		combination(tmp2, 0, chickenHouse.size(), M);
+		combination(0, 0);
+
 		// 남은 치킨집과 거리 비교로 최소 거리 측정
+		answer = Integer.MAX_VALUE;
 		for (int i = 0; i < remainChickenHouse.size(); i++) {
 			chickenDistance(i);
 		}
 		
 		// 출력
-		answer = Integer.MAX_VALUE;
-		for (int i = 0; i < sums.size(); i++) {
-			answer = Math.min(answer, sums.get(i)); 
-		}
 		System.out.println(answer);
 	}
 	
-	static void combination(ArrayList<ArrayList<Integer>> tmp2, int start, int n, int r) {
-		if (r == 0) {
-			tmp3 = new ArrayList<>();
-			for (int i = 0; i < tmp2.size(); i++) {
-				tmp3.add(tmp2.get(i));
-			}
-			remainChickenHouse.add(tmp3);
+	static void combination(int start, int depth) {
+		if (depth == M) {
+			ArrayList<Info> tmp = new ArrayList<>(comb);
+			remainChickenHouse.add(tmp);	
 		}
 		
-		for (int i = start; i < n; i++) {
-			visited[i] = true;
-			tmp2.add(chickenHouse.get(i));
-			combination(tmp2, i+1, n, r-1);
-			tmp2.remove(tmp2.size()-1);
-			visited[i] = false;
+		for (int i = start; i < chickenHouse.size(); i++) {
+			comb.add(new Info(chickenHouse.get(i).row, chickenHouse.get(i).col));
+			combination(i+1, depth+1);
+			comb.remove(comb.size()-1);
 		}
 	}
 	
 	static void chickenDistance(int x) {
-		tmp3 = new ArrayList<>();
-		tmp3 = remainChickenHouse.get(x);
+		ArrayList<Info> tmp = remainChickenHouse.get(x);
 		sum = 0;
 		for (int i = 0; i < house.size(); i++) {
 			min = Integer.MAX_VALUE;
-			for (int j = 0; j < tmp3.size(); j++) {
-				min = Math.min(min, Math.abs(house.get(i).get(0) - tmp3.get(j).get(0)) + Math.abs(house.get(i).get(1) - tmp3.get(j).get(1)));
+			for (int j = 0; j < tmp.size(); j++) {
+				min = Math.min(min, Math.abs(house.get(i).row - tmp.get(j).row) + Math.abs(house.get(i).col - tmp.get(j).col));
 			}
 			sum += min;
 		}
-		
-		sums.add(sum);
+		answer = Math.min(answer, sum);
 	}
 }

@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 /**
 
 @author 이병헌
-@since 2023. 8. 10.
+@since 2023. 8. 11.
 @see acmicpc.net/problem/1937
 @git
 @youtube
@@ -23,16 +23,6 @@ import java.util.StringTokenizer;
 */
 
 public class BOJ_01937 {
-//	static class Info{
-//		int x, y;
-//
-//		public Info(int x, int y) {
-//			super();
-//			this.x = x;
-//			this.y = y;
-//		}
-//	}
-	
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static StringBuilder sb = new StringBuilder();
@@ -40,7 +30,6 @@ public class BOJ_01937 {
 	static int N;
 	static int[][] bamboo;
 	static int[][] dp;
-//	static Deque<Info> stack = new ArrayDeque<>(); 
 	
 	static int[][] delta = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 	
