@@ -1,5 +1,19 @@
 package boj.silver5;
 
+/**
+
+@author 이병헌
+@since 2023. 8. 9.
+@see https://www.acmicpc.net/problem/2563
+@git
+@youtube
+@performance O(N)
+@category # 
+@note 
+전체 색종이 판을 만들어주고 입력받는 크기만큼 색칠해준다. 
+나중에 색칠된 칸의 개수를 출력하면 끝
+*/
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
