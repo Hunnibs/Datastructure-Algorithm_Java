@@ -1,4 +1,4 @@
-package boj;
+package boj.gold3;
 
 /**
 
@@ -22,13 +22,22 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_02252 {
+	static class Node{
+		int vertex;
+		Node next;
+
+		public Node(int vertex, Node next) {
+			this.vertex = vertex;
+			this.next = next;
+		}
+	}
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static StringBuilder sb = new StringBuilder();
 
 	static int N, M;
 	static int[] degree;
-	static int[][] adjMatrix;
+	static Node[] adjList;
 	static Queue<Integer> queue = new ArrayDeque<>();
 	
 	public static void main(String[] args) throws IOException{
@@ -36,30 +45,21 @@ public class BOJ_02252 {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		
-		// 정점과 간선 관계 정보 기록
-		adjMatrix = new int[N][N];
+		// 정점과 간선 관계 정보 && 차수 정보 기록
+		adjList = new Node[N+1];
+		degree = new int[N+1];
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
-			adjMatrix[Integer.parseInt(st.nextToken())-1][Integer.parseInt(st.nextToken())-1] = 1;
+			int from = Integer.parseInt(st.nextToken());
+			int to = Integer.parseInt(st.nextToken());
+			adjList[from] = new Node(to, adjList[from]);
+			degree[to]++;
 		}
-		
-		// 차수 정보 기록
-		degree = new int[N];
-		for (int r = 0; r < N; r++) {
-			int cnt = 0;
-			for (int c = 0; c < N; c++) {
-				if (adjMatrix[c][r] == 1) {
-					cnt++;
-				}
-			}
-			degree[r] = cnt;
-		}
-		
+
 		// 차수가 0인 것들은 큐에 담아준다.
-		for (int i = 0; i < N; i++) {
+		for (int i = 1; i <= N; i++) {
 			if (degree[i] == 0) {
 				queue.offer(i);
-				degree[i]--;
 			}
 		}
 		
@@ -71,18 +71,12 @@ public class BOJ_02252 {
 		int start;
 		while(!queue.isEmpty()) {
 			start = queue.poll();
-			sb.append(start+1).append(" ");
-			for (int end = 0; end < N; end++) {
-				if(adjMatrix[start][end] == 1) {
-					adjMatrix[start][end] = 0;
-					degree[end]--;
-				}
-			}
-			
-			for (int i = 0; i < N; i++) {  // 새롭게 차수가 0이 된 것들을 넣어준다.
-				if (degree[i] == 0) {
-					queue.offer(i);
-					degree[i]--;
+			sb.append(start).append(" ");
+
+			for(Node temp = adjList[start]; temp != null; temp = temp.next){
+				degree[temp.vertex]--;
+				if (degree[temp.vertex] == 0) {
+					queue.offer(temp.vertex);
 				}
 			}
 		}

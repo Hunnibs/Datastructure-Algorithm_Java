@@ -16,7 +16,6 @@ import java.util.StringTokenizer;
 @youtube
 @performance
 @category # DFS
-@note
  시작 지점은 (0, 0) 고정, 끝나는 지점은 (M-1, N-1) 고정
  특정 위치에 도달했을 때 끝까지 방문이 가능했던 지점이라면 더 탐색할 필요도 없이 개수만 추가해준다.
  
@@ -31,7 +30,7 @@ public class BOJ_01520 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
 
-    static int M, N, H;
+    static int M, N;
     static int[][] map, isAvailable;
     static boolean[][] visited;
     static int[][] delta = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
@@ -41,8 +40,8 @@ public class BOJ_01520 {
         M = Integer.parseInt(st.nextToken());
         N = Integer.parseInt(st.nextToken());
 
-        visited = new boolean[M][N];
-        isAvailable = new int[M][N];
+        visited = new boolean[M][N];  // dfs 탐색 중 중복 여부 판단을 위해서 만들어준다. 
+        isAvailable = new int[M][N];  // dp table과 동일하게 쓰일 예정
         map = new int[M][N];
         for (int r = 0; r < M; r++){
             st = new StringTokenizer(br.readLine());
@@ -72,7 +71,7 @@ public class BOJ_01520 {
                 dfs(tr, tc); 
                 visited[tr][tc] = true;
                 if (isAvailable[tr][tc] != 0){  // 탐색을 하고 나왔더니 값이 업데이트 되어있다는 것은 해당 경로의 끝이 목표지점과 연결이 되어있다는 뜻
-                    isAvailable[r][c] += isAvailable[tr][tc];  
+                    isAvailable[r][c] += isAvailable[tr][tc];
                 }
             }else if (isIn(tr, tc) && map[r][c] > map[tr][tc] && isAvailable[tr][tc] != 0){  // 방문을 했을 경우
                 isAvailable[r][c] += isAvailable[tr][tc];
