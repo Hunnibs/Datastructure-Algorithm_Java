@@ -32,13 +32,14 @@ public class BOJ_01799 {
         }
     }
     static int N, answer;
-    static List<Info> whiteBishop = new ArrayList<>();
-    static List<Info> blackBishop = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
         N = Integer.parseInt(br.readLine());
+
+        List<Info> whiteBishop = new ArrayList<>();
+        List<Info> blackBishop = new ArrayList<>();
         for (int r = 0; r < N; r++) {
             st = new StringTokenizer(br.readLine());
             for (int c = 0; c < N; c++) {
@@ -52,21 +53,23 @@ public class BOJ_01799 {
             }
         }
 
-        boolean[] visited = new boolean[bishop.size()];
-        for (int i = 0; i < bishop.size(); i++) {
-            dfs(i, 0, visited);
+        boolean[] visited = new boolean[whiteBishop.size()];
+        for (int i = 0; i < whiteBishop.size();i++){
+            dfs(i, 0, visited, whiteBishop);
+        }
+        int tmp = answer;
+        answer = 0;
+        visited = new boolean[blackBishop.size()];
+        for (int i = 0; i < blackBishop.size(); i++) {
+            dfs(i, 0, visited, blackBishop);
         }
 
-        System.out.println(answer);
+        System.out.println(tmp + answer);
     }
 
-    private static void dfs(int idx, int count, boolean[] visited){
+    private static void dfs(int idx, int count, boolean[] visited, List<Info> bishop){
         if (idx == bishop.size()){
             answer = Math.max(answer, count);
-            return;
-        }
-
-        if (count + (bishop.size() - idx) < answer){
             return;
         }
 
@@ -74,14 +77,14 @@ public class BOJ_01799 {
         if (!visited[idx]){
             boolean[] dpVisited = visited.clone();
             dpVisited[idx] = true;
-            update(idx, dpVisited);
-            dfs(idx+1, count+1, dpVisited);
+            update(idx, dpVisited, bishop);
+            dfs(idx+1, count+1, dpVisited, bishop);
             dpVisited[idx] = false;
         }
-        dfs(idx+1, count, visited);
+        dfs(idx+1, count, visited, bishop);
     }
 
-    private static void update(int idx, boolean[] visited){
+    private static void update(int idx, boolean[] visited, List<Info> bishop){
         Info current = bishop.get(idx);
         for (int i = idx+1; i < bishop.size(); i++) {
             Info next = bishop.get(i);
