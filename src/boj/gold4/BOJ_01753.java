@@ -14,13 +14,6 @@ public class BOJ_01753 {
             this.weight = weight;
         }
 
-        @Override
-        public String toString() {
-            return "Info{" +
-                    "vertex=" + vertex +
-                    ", weight=" + weight +
-                    '}';
-        }
     }
 
     static class Graph{
