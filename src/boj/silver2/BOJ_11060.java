@@ -32,7 +32,7 @@ public class BOJ_11060 {
         Arrays.fill(dp, 1001);
         dp[N-1] = 0;
 
-        int flag = 0;
+        // main
         for (int i = N-2; i >= 0; i--){
             for (int j = i+1; j <= i+maze[i]; j++){
                 if (j == N){
