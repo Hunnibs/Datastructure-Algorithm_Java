@@ -1,4 +1,4 @@
-package boj;
+package boj.gold2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,18 +10,18 @@ import java.util.StringTokenizer;
 
 /**
 
-- @author 이병헌
-- @since 2023-09-06
-- @see https://www.acmicpc.net/problem/12015
-- @git https://github.com/Hunnibs
-- @youtube
-- @performance
-- @category #
-- @note
+ - @author 이병헌
+ - @since 2023-09-06
+ - @see https://www.acmicpc.net/problem/12015
+ - @git https://github.com/Hunnibs
+ - @youtube
+ - @performance
+ - @category # Binary Search
+ - @note
 
  */
 
-public class BOJ_12015 {
+public class BOJ_12738 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -41,7 +41,11 @@ public class BOJ_12015 {
                 list.add(A[i]);
             } else{
                 int idx = Collections.binarySearch(list, A[i]);
-                list.set(Math.abs(idx)-1, A[i]);
+                if (idx >= 0) {
+                    continue;
+                } else {
+                    list.set(Math.abs(idx) - 1, A[i]);
+                }
             }
         }
 
