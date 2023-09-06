@@ -60,6 +60,7 @@ public class BOJ_01238 {
         X = Integer.parseInt(st.nextToken());
 
         Graph graph = new Graph(N);
+        Graph reverseGraph = new Graph(N);
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
             int from = Integer.parseInt(st.nextToken());
@@ -90,6 +91,7 @@ public class BOJ_01238 {
             }
         });
 
+        boolean[] visited = new boolean[N+1];  // 해당 그래프는 순환 싸이클이 생길 일이 없지만 기존 다익스트라 코드를 리뷰하기 위해 추가!
         int[] shortestPath = new int[N+1];  // 경로룰 지나가면서 최단거리를 업데이트하며 저장해줄 배열
         Arrays.fill(shortestPath, INF);
         shortestPath[start] = 0;  // 시작 지점은 우선 0으로 초기화한다.
@@ -100,11 +102,12 @@ public class BOJ_01238 {
             List<Info> nextVillage = graph.getGraph(current.vertex);  // 현재 정점과 연결된 다른 정점들의 정보를 하나에 저장
 
             for(Info next : nextVillage){
-                if (shortestPath[next.vertex] > next.weight + current.weight){  // 다음 정점까지의 경로가 이미 저장된 경로보다 작다면 업데이트를 해줄 수 있다.
+                if (!visited[next.vertex] && shortestPath[next.vertex] > next.weight + current.weight){  // 다음 정점까지의 경로가 이미 저장된 경로보다 작다면 업데이트를 해줄 수 있다.
                     shortestPath[next.vertex] = next.weight + current.weight;
                     pq.offer(new Info(next.vertex, shortestPath[next.vertex]));  // 늘 헷갈리는 부분: 힙에 저장되어야할 정보는 다음 정점과 **시작 정점부터 해당 정점까지의 거리**
                 }
             }
+            visited[start] = true;
         }
 
         return shortestPath[end];

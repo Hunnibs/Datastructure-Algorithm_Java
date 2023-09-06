@@ -78,6 +78,8 @@ public class Processor {
             return;
         }
 
+        if (finalCoreNum > coreNum + cores.size() - idx) return;
+
         int[][] searchMap = new int[N][N];
         Core core = cores.get(idx);
 
