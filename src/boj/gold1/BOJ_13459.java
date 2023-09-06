@@ -1,4 +1,4 @@
-package boj;
+package boj.gold1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,14 +7,14 @@ import java.util.*;
 
 /**
 
-- @author 이병헌
-- @since 2023/09/03
-- @see https://www.acmicpc.net/problem/13460
-- @git https://github.com/Hunnibs
-- @youtube
-- @performance
-- @category # BFS
-- @note
+ - @author 이병헌
+ - @since 2023/09/03
+ - @see https://www.acmicpc.net/problem/13459
+ - @git https://github.com/Hunnibs
+ - @youtube
+ - @performance
+ - @category # BFS
+ - @note
  최소 횟수를 묻는 문제이므로 DFS가 아닌 BFS를 활용해야한다.
 
  조건
@@ -23,7 +23,7 @@ import java.util.*;
  3. 파란색이 구멍으로 떨어지면 안된다.
  */
 
-public class BOJ_13460 {
+public class BOJ_13459 {
     static class Info{
         int redRow, redCol, blueRow, blueCol, d, count;
 
@@ -107,9 +107,9 @@ public class BOJ_13460 {
         bfs(queue, goalRow, goalCol);
 
         if (answer > 0){
-            System.out.println(answer);
+            System.out.println(1);
         } else {
-            System.out.println(-1);
+            System.out.println(0);
         }
     }
 
