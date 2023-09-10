@@ -1,4 +1,4 @@
-package boj.gold3;
+package boj;
 
 import java.io.BufferedReader;
 import java.io.IOException;
