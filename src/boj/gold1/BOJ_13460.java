@@ -82,6 +82,7 @@ public class BOJ_13460 {
             map[r] = s.toCharArray();
         }
 
+        // 필요한 정보들을 미리 받아서 변수에 따로 저장해주는 과정
         int redRow = 0, redCol = 0, blueRow = 0, blueCol = 0, goalRow = 0, goalCol = 0;
         for (int r = 0; r < N; r++) {
             for (int c = 0; c < M; c++) {
@@ -113,6 +114,7 @@ public class BOJ_13460 {
         }
     }
 
+    // 공의 방향을 지정하고 굴렸을 때 한 방향으로 굴러가도록 설정(DFS 방식의 활용)
     private static Info move(Info current){
         Stack<Info> stack = new Stack<>();
         stack.push(current);
@@ -125,6 +127,11 @@ public class BOJ_13460 {
             int nrBlue = current.blueRow + delta[current.d][0];
             int ncBlue = current.blueCol + delta[current.d][1];
 
+            /* 케이스 분류 3가지
+             1. 둘다 벽에 부딪히지도 않았을 경우
+             2. 빨간공만 벽에 부딪히지 않았을 경우
+             3. 파란공만 벽에 부딪히지 않았을 경우
+             */
             if (notWall(nrRed, ncRed) && map[nrRed][ncRed] != '#' && notWall(nrBlue, ncBlue) && map[nrBlue][ncBlue] != '#'){
                 if (goalIn(nrRed, ncRed)){
                     answer = current.count+1;
@@ -183,7 +190,7 @@ public class BOJ_13460 {
             }
 
             for (int i = 0; i < 4; i++) {
-                if (i == (current.d + 2) % 4){  // 기울어졌던 곳으로 다시 기울일 필요는 없다.
+                if (i == (current.d + 2) % 4){  // 기울어졌던 곳으로 다시 기울일 필요는 없다. 이 때, 주의해야할 점은 기울인 방향의 반대 방향으로 다시 기울이지 않는다는 점이다.
                     continue;
                 } else{
                     queue.offer(new Info(next.redRow, next.redCol, next.blueRow, next.blueCol, i, current.count+1));
