@@ -74,38 +74,20 @@ public class BOJ_01245 {
 
     private static void search(int row, int col){
         Queue<Info> queue = new ArrayDeque<>();
-        Deque<Info> queue2 = new ArrayDeque<>();
-
         queue.offer(new Info(row, col));
-        queue2.offer(new Info(row, col));
 
         // Heght에 인접한 영역들을 지정
         while(!queue.isEmpty()){
             Info current = queue.poll();
-
-            for (int i = 0; i < 8; i++) {
-                int tr = current.row + delta[i][0];
-                int tc = current.col + delta[i][1];
-                if(isIn(tr, tc) && !visited[tr][tc] && mountain[tr][tc] == mountain[row][col]){
-                    visited[tr][tc] = true;
-                    queue.offer(new Info(tr, tc));
-                    queue2.offer(new Info(tr, tc));
-                }
-            }
-        }
-
-        // 해당 산 방문 처리
-        while(!queue2.isEmpty()){
-            Info current = queue2.poll();
             int r = current.row;
             int c = current.col;
 
             for (int i = 0; i < 8; i++) {
-                int tr = r + delta[i][0];
-                int tc = c + delta[i][1];
+                int tr = current.row + delta[i][0];
+                int tc = current.col + delta[i][1];
                 if(isIn(tr, tc) && !visited[tr][tc] && mountain[tr][tc] <= mountain[r][c]){
-                    queue2.offer(new Info(tr, tc));
                     visited[tr][tc] = true;
+                    queue.offer(new Info(tr, tc));
                 }
             }
         }
