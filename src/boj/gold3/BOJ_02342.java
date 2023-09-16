@@ -1,4 +1,4 @@
-package boj;
+package boj.gold3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 
 - @author 이병헌
 - @since 2023-09-15
-- @see https://www.acmicpc.net/problem/ BOJ_02342
+- @see https://www.acmicpc.net/problem/2342
 - @git https://github.com/Hunnibs
 - @youtube
 - @performance
@@ -26,7 +26,8 @@ import java.util.StringTokenizer;
  */
 
 public class  BOJ_02342 {
-    static int[][][] ddr = new int[100000][5][5];
+    static int[][][] ddr = new int[100001][5][5];
+    static int max = Integer.MAX_VALUE;
     static int position;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -42,6 +43,9 @@ public class  BOJ_02342 {
         if (position == 0){
             System.out.println(0);
         } else {
+            for (int r = 0; r < 5; r++) {
+                Arrays.fill(ddr[0][r], max);
+            }
             ddr[0][0][position] = 2;
             ddr[0][position][0] = 2;
 
@@ -53,15 +57,19 @@ public class  BOJ_02342 {
                     break;
                 }
 
+                for (int r = 0; r < 5; r++) {
+                    Arrays.fill(ddr[idx+1][r], max);
+                }
+
                 search(idx++);
             }
 
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.println(Arrays.toString(ddr[i][j]));
-            }
-            System.out.println("----------");
-        }
+//            for (int i = 0; i < 10; i++) {
+//                for (int j = 0; j < 5; j++) {
+//                    System.out.println(Arrays.toString(ddr[i][j]));
+//                }
+//                System.out.println("----------");
+//            }
             System.out.println(findMin(idx));
         }
     }
@@ -70,11 +78,7 @@ public class  BOJ_02342 {
         int min = Integer.MAX_VALUE;
         for (int r = 0; r < 5; r++) {
             for (int c = 0; c < 5; c++) {
-                if (ddr[idx][r][c] == 0){
-                    continue;
-                }
                 min = Math.min(min, ddr[idx][r][c]);
-
             }
         }
 
@@ -84,42 +88,41 @@ public class  BOJ_02342 {
     private static void search(int idx){
         for (int r = 0; r < 5; r++) {
             for (int c = 0; c < 5; c++) {
-                if (ddr[idx][r][c] != 0){  // 이전 게임에 밟은 경우
-                    // 0. 가운데 발판에서 발을 뗐을 때
-                    if (r == 0) {
-                        ddr[idx + 1][position][c] = ddr[idx][r][c] + 2;
-                    }
-                    // 1. 같은 발판을 다시 밟아야 하는 경우
-                    else if (r == position){
-                        ddr[idx+1][r][c] = ddr[idx][r][c] + 1;
-                    }
-                    // 2. 반대쪽 발판을 밟게 되는 경우
-                    else if ((r + 2) % 5 == position) {// 왼발이 움직인 경우
-                        ddr[idx + 1][position][c] = ddr[idx][r][c] + 4;
-                    }
-                    // 3. 나머지 경우
-                    else{
-                        ddr[idx+1][position][c] = ddr[idx][r][c] + 3;
-                    }
+                if (r == c){
+                    continue;
+                }
 
+                if (ddr[idx][r][c] != max){  // 이전 게임에 밟은 경우
                     // 0. 가운데 발판에서 발을 뗐을 때
-                    if (c == 0) {
-                        ddr[idx + 1][r][position] = ddr[idx][r][c] + 2;
+                    if (r == 0 && c != position) {
+                        ddr[idx + 1][position][c] = Math.min(ddr[idx + 1][position][c], ddr[idx][r][c] + 2);
+                    }
+                    if (c == 0 && r != position) {
+                        ddr[idx + 1][r][position] = Math.min(ddr[idx + 1][r][position], ddr[idx][r][c] + 2);
                     }
 
                     // 1. 같은 발판을 다시 밟아야 하는 경우
-                    else if (c == position){
-                        ddr[idx+1][r][c] = ddr[idx][r][c] + 1;
+                   if (r == position){
+                        ddr[idx+1][r][c] = Math.min(ddr[idx][r][c] + 1,  ddr[idx+1][r][c]);
                     }
+                   if (c == position){
+                       ddr[idx+1][r][c] = Math.min(ddr[idx][r][c] + 1, ddr[idx+1][r][c]);
+                   }
 
                     // 2. 반대쪽 발판을 밟게 되는 경우
-                    else if ((c + 2) % 5 == position) { // 오른발이 움직인 경우
-                        ddr[idx + 1][r][position] = ddr[idx][r][c] + 4;
+                    if (r != 0 && c != position && Math.abs(r - position) == 2) {// 왼발이 움직인 경우
+                        ddr[idx + 1][position][c] = Math.min(ddr[idx + 1][position][c], ddr[idx][r][c] + 4);
+                    }
+                    if (c != 0 && r != position && Math.abs(c - position) == 2) { // 오른발이 움직인 경우
+                        ddr[idx + 1][r][position] = Math.min(ddr[idx][r][c] + 4, ddr[idx + 1][r][position]);
                     }
 
                     // 3. 나머지 경우
-                    else{
-                        ddr[idx+1][r][position] = ddr[idx][r][c] + 3;
+                    if (r != 0 && r != position && c != position && Math.abs(r - position) != 2){
+                        ddr[idx+1][position][c] = Math.min(ddr[idx][r][c] + 3, ddr[idx+1][position][c]);
+                    }
+                    if(c != 0 && r != position && c != position && Math.abs(c - position) != 2){
+                        ddr[idx+1][r][position] = Math.min(ddr[idx][r][c] + 3, ddr[idx+1][r][position]);
                     }
                 }
             }
