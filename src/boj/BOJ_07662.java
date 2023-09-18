@@ -19,20 +19,10 @@ import java.util.*;
  */
 
 public class BOJ_07662 {
-    static PriorityQueue<Integer> minHeap = new PriorityQueue<>();  // 기본 default 오름차순
-    static PriorityQueue<Integer> maxHeap = new PriorityQueue<>(new Comparator<Integer>() {  // 내림차순
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return o2 - o1;
-        }
-    });
-    static PriorityQueue<Integer> minQ = new PriorityQueue<>();  // 기본 default 오름차순
-    static PriorityQueue<Integer> maxQ = new PriorityQueue<>(new Comparator<Integer>() {  // 내림차순
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return o2 - o1;
-        }
-    });
+    static PriorityQueue<Integer> minHeap;  // 기본 default 오름차순
+    static PriorityQueue<Integer> maxHeap;
+    static PriorityQueue<Integer> minQ; // 기본 default 오름차순
+    static PriorityQueue<Integer> maxQ;// 내림차순
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -40,9 +30,13 @@ public class BOJ_07662 {
 
         int T = Integer.parseInt(br.readLine());
         for (int test_case = 0; test_case < T; test_case++) {
+            minHeap = new PriorityQueue<>();
+            maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+            minQ = new PriorityQueue<>();
+            maxQ = new PriorityQueue<>(Comparator.reverseOrder());
+
             int N = Integer.parseInt(br.readLine());
 
-            boolean flag = false;
             int cnt = 0;
             for (int i = 0; i < N; i++) {
                 st = new StringTokenizer(br.readLine());
@@ -50,27 +44,23 @@ public class BOJ_07662 {
                 String cmd = st.nextToken();
                 int num = Integer.parseInt(st.nextToken());
 
-                if(!flag && cmd.equals("D") && cnt == 0){
-                    flag = true;
+                if (cmd.equals("D") && cnt == 0){  // 삭제할것이 없는 경우 그냥 패스
+                    continue;
                 }
 
-                if (!flag) {
-                    switch (cmd) {
-                        case "I":
-                            insert(num);
-                            cnt++;
-                            break;
-                        case "D":
-                            delete(num);
-                            cnt--;
-                            break;
-                    }
+                switch (cmd) {
+                    case "I":
+                        insert(num);
+                        cnt++;
+                        break;
+                    case "D":
+                        delete(num);
+                        update();
+                        cnt--;
+                        break;
                 }
-
-                update();
             }
-
-            if (flag){
+            if (cnt == 0){
                 sb.append("EMPTY\n");
             } else{
                 sb.append(maxHeap.poll()).append(" " + minHeap.poll() + "\n");
@@ -81,7 +71,7 @@ public class BOJ_07662 {
 
     private static void update(){
         while(!minQ.isEmpty()){
-            if (minQ.peek() == minHeap.peek()){
+            if (minQ.peek().equals(minHeap.peek())){
                 minQ.poll();
                 minHeap.poll();
             } else{
@@ -90,7 +80,7 @@ public class BOJ_07662 {
         }
 
         while(!maxQ.isEmpty()){
-            if (maxQ.peek() == maxHeap.peek()){
+            if (maxQ.peek().equals(maxHeap.peek())){
                 maxQ.poll();
                 maxHeap.poll();
             } else{
