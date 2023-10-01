@@ -61,7 +61,7 @@ public class BOJ_09019 {
             next = multiply(num);
             if (!visited[next]) {
                 visited[next] = true;
-                queue.offer(new Info(next, new StringBuilder().append(sb).append("D")));
+                queue.offer(new Info(next, new StringBuilder(sb).append("D")));
             }
             next = sub(num);
             if (!visited[next]){

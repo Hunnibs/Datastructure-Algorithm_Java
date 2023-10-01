@@ -16,11 +16,13 @@ import java.util.*;
 - @category # Priority Queue
 - @note 
  최대힙과 최소힙을 두 개 사용
+ 최소힙에서 값을 뺐다면 만들어둔 임시 최대힙에 넣어주고 최대힙에서 삭제할 때 임시 최대힙을 확인해 같은 것이 힙에서 반환된다면 그 값은 이미 뺀 것으로 취급하는 방식이다.
+ 물론 최대힙도 마찬가지의 방법으로 생각했다.
  */
 
 public class BOJ_07662 {
     static PriorityQueue<Integer> minHeap;  // 기본 default 오름차순
-    static PriorityQueue<Integer> maxHeap;
+    static PriorityQueue<Integer> maxHeap; // 내림차순
     static PriorityQueue<Integer> minQ; // 기본 default 오름차순
     static PriorityQueue<Integer> maxQ;// 내림차순
     public static void main(String[] args) throws IOException {
@@ -37,7 +39,7 @@ public class BOJ_07662 {
 
             int N = Integer.parseInt(br.readLine());
 
-            int cnt = 0;
+            int cnt = 0;  // 입력 받은 개수 -> 삭제 명령이 들어오면 하나씩 줄여준다.
             for (int i = 0; i < N; i++) {
                 st = new StringTokenizer(br.readLine());
 
@@ -89,7 +91,7 @@ public class BOJ_07662 {
         }
     }
 
-    private static void insert(int num){
+    private static void insert(int num){  // 두 힙 모두에 추가해준다.
         maxHeap.offer(num);
         minHeap.offer(num);
     }

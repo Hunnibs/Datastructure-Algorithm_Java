@@ -51,7 +51,6 @@ public class BOJ_02110 {
             if (sol(mid)){
                 right = mid-1;
             } else{
-                result = Math.max(result, mid);
                 left = mid+1;
             }
         }
