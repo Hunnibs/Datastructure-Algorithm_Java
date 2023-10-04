@@ -50,7 +50,7 @@ public class BOJ_09205 {
 
             while(!current.isEmpty()){
                 if (visited[n]){
-                    System.out.println("happy");
+                    sb.append("happy\n");
                     continue test;
                 }
 
@@ -67,7 +67,8 @@ public class BOJ_09205 {
                     }
                 }
             }
-            System.out.println("sad");
+            sb.append("sad\n");
         }
+        System.out.println(sb);
     }
 }
