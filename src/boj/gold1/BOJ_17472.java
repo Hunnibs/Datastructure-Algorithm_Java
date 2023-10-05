@@ -1,4 +1,5 @@
-package boj;
+package boj.gold1;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -81,11 +82,6 @@ public class BOJ_17472 {
             }
         }
 
-        if(check(bridge, cnt)){
-            System.out.println(-1);
-            return;
-        }
-
         List<Graph> graph = new ArrayList<>();
         for (int i = 2; i < cnt + 2; i++) {
             for (int j = 2; j < i; j++) {
@@ -115,24 +111,22 @@ public class BOJ_17472 {
             }
         }
 
-        System.out.println(cost);
+        if (check(parent)) {
+            System.out.println(cost);
+        } else{
+            System.out.println(-1);
+        }
     }
 
-    private static boolean check(int[][] bridge,int cnt){
-        for (int i = 2; i < cnt+1; i++) {
-            int tmp = 0;
-            for (int j = 2; j < cnt+1; j++) {
-                if (bridge[i][j] != 0){
-                    tmp++;
-                }
-            }
-            if (tmp == 0){
-                return true;
+    private static boolean check(int[] parent){
+        int a = find(1);
+        for (int i = 2; i < parent.length; i++) {
+            if (a != find(i)){
+                return false;
             }
         }
-        return false;
+        return true;
     }
-
     private static void search(int[][] map, int row, int col, int nd, int start){
         int nr = row + delta[nd][0], nc = col + delta[nd][1];
         int cnt = 1;
@@ -207,7 +201,7 @@ public class BOJ_17472 {
         if (parent[x] == x){
             return x;
         } else{
-            return find(parent[x]);
+            return parent[x] = find(parent[x]);
         }
     }
 
