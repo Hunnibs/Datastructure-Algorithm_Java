@@ -3,6 +3,7 @@ package swea;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
@@ -17,11 +18,15 @@ import java.util.StringTokenizer;
 - @note */
 
 public class Combination {
-    static final long MOD = 1234567891;
+    static final long MOD = 1_000_000_007;
+    static long[] factorial = new long[4_000_001];
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         StringBuilder sb = new StringBuilder();
+
+        factorial[0] = 1;
+        factorial(1);
 
         int T = Integer.parseInt(br.readLine());
         for (int test_case = 1; test_case <= T; test_case++) {
@@ -29,9 +34,9 @@ public class Combination {
             int n = Integer.parseInt(st.nextToken());
             int r = Integer.parseInt(st.nextToken());
 
-            int answer = (int) (((factorial(n) % MOD) * (pow((factorial(r) * factorial(n-r)) % MOD, MOD-2) % MOD)) % MOD);
+            int answer = (int) (((factorial[n] % MOD) * (pow((factorial[r] * factorial[n-r]) % MOD, MOD-2) % MOD)) % MOD);
 
-            sb.append("#").append(test_case).append(" ").append(answer).append("\n");
+            sb.append(answer).append("\n");
         }
         System.out.println(sb);
     }
@@ -48,11 +53,11 @@ public class Combination {
         return (tmp * tmp) % MOD;
     }
 
-    private static long factorial(int num){
+    private static void factorial(int num){
         long answer = 1;
-        while(num > 1){
-            answer = (answer * (num--)) % MOD;
+        while(num <= 4_000_000){
+            answer = (answer * (num)) % MOD;
+            factorial[num++] = answer;
         }
-        return answer;
     }
 }
