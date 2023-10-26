@@ -21,7 +21,7 @@ public class Main {
     static int[][] delta = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     static int N, Q;  // 상자의 개수, 이동 횟수
     public static void main(String[] args) throws IOException {
-        int answer = 0;
+        long answer = 0;
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
