@@ -31,7 +31,7 @@ public class Main {
 
         // left = odd
         int cnt = 0;
-        int oddSum = 0;
+        long oddSum = 0;
         for (int i = 0; i < N; i++) {
             if (arr[i] % 2 == 1){
                 oddSum += cnt;
@@ -41,7 +41,7 @@ public class Main {
         }
 
         cnt = 0;
-        int evenSum = 0;
+        long evenSum = 0;
         for (int i = 0; i < N; i++) {
             if (arr[i] % 2 == 0){
                 evenSum += cnt;
