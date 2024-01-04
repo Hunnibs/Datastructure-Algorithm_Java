@@ -28,7 +28,7 @@ public class Main {
             V[i] = Integer.parseInt(st.nextToken());
         }
 
-        int sum = 1;
+        long sum = 1;
         int cur = 1;
         for (int i = N-2; i >= 0; i--) {
             if (V[i] > cur){
