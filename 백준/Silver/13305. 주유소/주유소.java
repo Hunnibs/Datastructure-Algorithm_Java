@@ -36,17 +36,17 @@ public class Main {
         System.out.println(sol(N, distance, price));
     }
 
-    private static int sol(int N, int[] distance, int[] price){
+    private static long sol(int N, int[] distance, int[] price){
         // 초기값 설정 price[0]에서 distance[0]만큼을 충전해야 출발할 수 있다.
         int min = price[0];
-        int sum = distance[0] * price[0];
+        long sum = (long) distance[0] * price[0];
 
         for (int i = 1; i < N-1; i++) {
             if (min > price[i]){
                 min = price[i];
             }
 
-            sum += min * distance[i];
+            sum += (long) min * distance[i];
         }
 
         return sum;
