@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.StringTokenizer;
 
@@ -18,6 +17,9 @@ import java.util.StringTokenizer;
  * - @category # Implemetation
  * - @note
  * 얼음은 한날한시에 다같이 줄어야한다.
+ *
+ * 아 누구라도 이 글을 본다면 웹툰 그만보고 책 읽으세요
+ * 그림보고 섣불리 판단한 저는 그러려합니다.
  */
 
 public class BOJ_20058 {
@@ -62,38 +64,42 @@ public class BOJ_20058 {
 
     // 격자 범위 정하는 함수
     private static void setRange(int[][] map, int L) {
-        int range = (int) Math.pow(2, L);
-        int cnt = 0;
-
-        for (int r = 0; r < n; r += range) {
-            if (cnt % 2 == 0) {
-                for (int c = 0; c < n - range; c += (2 * range)) {
-                    turnGrid(map, r, c, range);
-                }
-            } else {
-                for (int c = range; c < n; c += (2 * range)) {
-                    turnGrid(map, r, c, range);
-                }
-            }
-            cnt++;
-        }
-    }
-
-    // 격자 별 돌리기
-    private static void turnGrid(int[][] map, int r, int c, int range) {
         int[][] tmpMap = new int[n][n];
         for (int i = 0; i < n; i++) {
             tmpMap[i] = map[i].clone();
         }
 
-        for (int i = 0; i < range; i++) {
-            for (int j = 0; j < range; j++) {
-                tmpMap[r + i][c + range - 1 - j] = map[r + j][c + i];
+        int range = (int) Math.pow(2, L);
+        int cnt = 0;
+
+        for (int r = 0; r < n; r += range) {
+            // 난 바둑판 처럼 돌렸지 격자 무늬로 다 나눠서
+//            if (cnt % 2 == 0) {
+//                for (int c = 0; c < n - range; c += (2 * range)) {
+//                    turnGrid(map, r, c, range);
+//                }
+//            } else {
+//                for (int c = range; c < n; c += (2 * range)) {
+//                    turnGrid(map, r, c, range);
+//                }
+//            }
+            for (int c = 0; c < n; c += range) {
+                turnGrid(map, tmpMap, r, c, range);
             }
+            cnt++;
         }
 
         for (int i = 0; i < n; i++) {
             map[i] = tmpMap[i].clone();
+        }
+    }
+
+    // 격자 별 돌리기
+    private static void turnGrid(int[][] map, int[][] tmpMap, int r, int c, int range) {
+        for (int i = 0; i < range; i++) {
+            for (int j = 0; j < range; j++) {
+                tmpMap[r + i][c + range - 1 - j] = map[r + j][c + i];
+            }
         }
     }
 
