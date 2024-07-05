@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class Solution {
+class Main {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -9,5 +9,14 @@ class Solution {
 
 
     public static void main(String[] args) throws Exception {
+
+    }
+
+    private static int test(int N){
+        return N;
+    }
+
+    private static String test(int N, String x){
+        return "";
     }
 }
