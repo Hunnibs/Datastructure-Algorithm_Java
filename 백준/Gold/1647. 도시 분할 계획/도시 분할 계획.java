@@ -1,12 +1,12 @@
 /**
 
 - @author 이병헌
-- @since 7/30/24
-- @see https://www.acmicpc.net/problem/1647
+- @since 8/5/24
+- @see https://www.acmicpc.net/problem/01647
 - @git https://github.com/Hunnibs
 - @youtube
 - @performance
-- @category # Graph #
+- @category # kruskal # union-find
 - @note
 
  */
@@ -15,7 +15,9 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    private static int[] parent;
+
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
@@ -23,7 +25,7 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        Graph graph = new Graph(N);
+        List<Info> graph = new ArrayList<>();
 
         for (int i = 0; i < M; i++){
             st = new StringTokenizer(br.readLine());
@@ -31,67 +33,58 @@ public class Main {
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
 
-            graph.setGraph(a, b, c);
-            graph.setGraph(b, a, c);
+            graph.add(new Info(a, b, c));
         }
 
-        System.out.print(prim(N, graph));
-    }
+        Collections.sort(graph);
 
-    private static long prim(int N, Graph graph){
-        PriorityQueue<Info> pq = new PriorityQueue<>();
-        boolean[] visited = new boolean[N + 1];
-        pq.add(new Info(1,0));
+        parent = new int[N+1];
+        for (int i = 0; i <= N; i++) {
+            parent[i] = i;
+        }
 
-        long sum = 0;
+        long answer = 0;
         int max = 0;
-        while (!pq.isEmpty()) {
-            Info cur = pq.poll();
-            if (visited[cur.to]) continue;
-
-            visited[cur.to] = true;
-            sum += cur.weight;
-            max = Math.max(max, cur.weight);
-
-            List<Info> nextGroup = graph.getGraph(cur.to);
-            for(Info next : nextGroup){
-                if (visited[next.to]) continue;
-                else pq.add(next);
+        for(Info info : graph){
+            if (find(info.from) != find(info.to)){
+                answer += info.weight;
+                union(info.from, info.to);
+                max = Math.max(max, info.weight);
             }
         }
 
-        return sum - max;
+        System.out.print(answer - max);
     }
 
-    private static class Graph{
-        List<List<Info>> graph = new ArrayList<>();
+    private static void union(int x, int y){
+        x = find(x);
+        y = find(y);
 
-        public Graph(int N){
-            for(int i = 0; i <= N; i++){
-                graph.add(new ArrayList<>());
-            }
+        if (x != y){
+            parent[x] = y;
+        }
+    }
+
+    private static int find(int x){
+        if (x == parent[x]){
+            return x;
         }
 
-        public void setGraph(int from, int to, int weight){
-            graph.get(from).add(new Info(to, weight));
-        }
-
-        public List<Info> getGraph(int from){
-            return graph.get(from);
-        }
+        return parent[x] = find(parent[x]);
     }
 
     private static class Info implements Comparable<Info>{
-        int to, weight;
+        int from, to, weight;
 
-        public Info(int to, int weight){
+        public Info(int from, int to, int weight) {
+            this.from = from;
             this.to = to;
             this.weight = weight;
         }
 
         @Override
         public int compareTo(Info o) {
-            return this.weight - o.weight;
+            return Integer.compare(weight, o.weight);
         }
     }
 }
