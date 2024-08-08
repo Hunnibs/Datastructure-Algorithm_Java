@@ -1,18 +1,20 @@
 /**
-
-- @author 이병헌
-- @since 8/5/24
-- @see https://www.acmicpc.net/problem/01647
-- @git https://github.com/Hunnibs
-- @youtube
-- @performance
-- @category # kruskal # union-find
-- @note
-
+ - @author 이병헌
+ - @since 8/5/24
+ - @see https://www.acmicpc.net/problem/01647
+ - @git https://github.com/Hunnibs
+ - @youtube
+ - @performance
+ - @category # kruskal # union-find
+ - @note
  */
 
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
     private static int[] parent;
@@ -45,14 +47,16 @@ public class Main {
 
         long answer = 0;
         int max = 0;
+        int count = 0;
         for(Info info : graph){
             if (find(info.from) != find(info.to)){
                 answer += info.weight;
                 union(info.from, info.to);
                 max = Math.max(max, info.weight);
+                if(++count == N-1) break;
+
             }
         }
-
         System.out.print(answer - max);
     }
 
