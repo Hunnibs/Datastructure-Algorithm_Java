@@ -60,9 +60,7 @@ public class Main {
         }
 
         ArrayList<Character> toLearn = new ArrayList<>();
-        Iterator<Character> iter = alphabet.iterator();
-        while (iter.hasNext()) {
-            Character c = iter.next();
+        for(Character c : alphabet){
             toLearn.add(c);
         }
 
@@ -83,9 +81,7 @@ public class Main {
                 HashSet<Character> word = table.get(i);
                 boolean flag = false;
 
-                Iterator<Character> iter = word.iterator();
-                while (iter.hasNext()) {
-                    Character c = iter.next();
+                for(Character c: word){
                     if (!alpha[c - 97]) {
                         flag = true;
                         break;
