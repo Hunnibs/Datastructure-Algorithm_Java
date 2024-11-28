@@ -16,7 +16,6 @@
  4. N번 반복
  */
 
-import java.util.*;
 import java.io.*;
 
 public class Main {
@@ -28,18 +27,16 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         boolean[] alphabet = new boolean[26];
         for (int i = 0; i < N; i++){
-            String word = br.readLine();
-            sb.append(check(word, alphabet)).append("\n");
+            String[] words = check(br.readLine(), alphabet);
+            sb.append(String.join(" ", words)).append("\n");
         }
 
         System.out.println(sb);
     }
 
-    private static StringBuilder check(String word, boolean[] alphabet){
+    private static String[] check(String word, boolean[] alphabet){
 
         String[] words = word.split(" ");
-        boolean flag = true;
-
         // 1. 단어 첫 글자
         for(int i = 0; i < words.length; i++){
             String alpha = words[i];
@@ -47,34 +44,27 @@ public class Main {
             if (!alphabet[beta.charAt(0) - 'a']){
                 alphabet[beta.charAt(0) - 'a'] = true;
                 words[i] = "[" + alpha.charAt(0) + "]" + alpha.substring(1);
-                flag = false;
-                break;
+                return words;
             }
         }
 
+        return check2(words, alphabet);
+    }
+
+    private static String[] check2(String[] words, boolean[] alphabet){
         // 2. 두 번째 글자
-        if (flag) {
-            for (int i = 0; i < words.length; i++) {
-                if (flag) {
-                    String alpha = words[i];
-                    String beta = alpha.toLowerCase();
-                    for (int j = 0; j < alpha.length(); j++) {
-                        if (!alphabet[beta.charAt(j) - 'a']) {
-                            alphabet[beta.charAt(j) - 'a'] = true;
-                            words[i] = alpha.substring(0, j) + "[" + alpha.charAt(j) + "]" + alpha.substring(j + 1);
-                            flag = false;
-                            break;
-                        }
-                    }
+        for (int i = 0; i < words.length; i++) {
+            String alpha = words[i];
+            String beta = alpha.toLowerCase();
+            for (int j = 0; j < alpha.length(); j++) {
+                if (!alphabet[beta.charAt(j) - 'a']) {
+                    alphabet[beta.charAt(j) - 'a'] = true;
+                    words[i] = alpha.substring(0, j) + "[" + alpha.charAt(j) + "]" + alpha.substring(j + 1);
+                    return words;
                 }
             }
         }
 
-        StringBuilder sb = new StringBuilder();
-        for (String alpha : words) {
-            sb.append(alpha).append(" ");
-        }
-
-        return sb;
+        return words;
     }
 }
