@@ -1,22 +1,67 @@
-import java.util.*;
-import java.io.*;
+/**
+ - @author 이병헌
+ - @since 8/5/24
+ - @see https://www.acmicpc.net/problem/01647
+ - @git https://github.com/Hunnibs
+ - @youtube
+ - @performance
+ - @category # kruskal # union-find
+ - @note
+ */
 
-class Main {
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
 
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
+public class Main {
+    private static int[] parent;
 
+    public static void main(String[] args) throws Exception{
+        List<Integer> a = new ArrayList<>();
+        a.add(3);
+        a.add(6);
+        a.add(1);
 
-    public static void main(String[] args) throws Exception {
-
+        Collections.sort(a, Collections.reverseOrder());
+        System.out.println(a);
     }
 
-    private static int test(int N){
-        return N;
+    private static void union(int x, int y){
+        x = find(x);
+        y = find(y);
+
+        if (x != y){
+            if (x > y) {
+                parent[y] = x;
+            } else{
+                parent[x] = y;
+            }
+        }
     }
 
-    private static String test(int N, String x){
-        return "";
+    private static int find(int x){
+        if (x == parent[x]){
+            return x;
+        }
+
+        return parent[x] = find(parent[x]);
+    }
+
+    private static class Info implements Comparable<Info>{
+        int from, to, weight;
+
+        public Info(int from, int to, int weight) {
+            this.from = from;
+            this.to = to;
+            this.weight = weight;
+        }
+
+        @Override
+        public int compareTo(Info o) {
+            return Integer.compare(weight, o.weight);
+        }
     }
 }
