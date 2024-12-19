@@ -11,6 +11,7 @@
 0 < M, N <= 100
  */
 
+import java.sql.Array;
 import java.util.*;
 import java.io.*;
 
@@ -44,7 +45,7 @@ public class Main {
     }
 
     private static int bfs(Info start, Info end, int[][] map) {
-        PriorityQueue<Info> queue = new PriorityQueue<>();
+        Queue<Info> queue = new ArrayDeque<>();
         boolean[][][] visited = new boolean[4][N][M];
         queue.add(start);
 
@@ -52,7 +53,6 @@ public class Main {
             Info cur = queue.poll();
 
             if (isFinish(end, cur.r, cur.c, cur.dir)) return cur.order;
-
 
             // change direction
             for (int dir = 1; dir <= 2; dir++) {
@@ -119,7 +119,7 @@ public class Main {
         return 0;
     }
 
-    private static class Info implements Comparable<Info>{
+    private static class Info{
         int r;
         int c;
         int dir;
@@ -130,12 +130,6 @@ public class Main {
             this.c = c;
             this.dir = dir;
             this.order = order;
-        }
-
-
-        @Override
-        public int compareTo(Info o) {
-            return Integer.compare(this.order, o.order);
         }
     }
 }
