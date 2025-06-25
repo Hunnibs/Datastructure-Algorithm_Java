@@ -16,22 +16,26 @@ public class Main {
 
 		Arrays.sort(convention, (a, b) -> Integer.compare(b[1], a[1]));
 
-		Deque<Integer> stack = new ArrayDeque<>();
+		int cnt = 0;
+		int prev = 0;
 		for(int[] times : convention) {
-			if (stack.isEmpty())
-				stack.offerLast(times[0]);
+			if (cnt == 0) {
+				prev = times[0];
+				cnt++;
+			}
 
-			if (stack.peekLast() < times[1]) {
-				if (stack.peekLast() > times[0])
+			if (prev < times[1]) {
+				if (prev > times[0])
 					continue;
 				else {
-					stack.pollLast();
-					stack.offerLast(times[0]);
+					prev = times[0];
 				}
-			} else
-				stack.offerLast(times[0]);
+			} else {
+				prev = times[0];
+				cnt++;
+			}
 		}
 
-		System.out.println(stack.size());
+		System.out.println(cnt);
 	}
 }
